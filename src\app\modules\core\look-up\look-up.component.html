@@ -1,0 +1,51 @@
+<div class="container-fluid">
+    <div class="row mx-0" *ngIf="!loading">
+
+        <!-- <div class="col-12 mb-2">
+            <button mat-raised-button color="primary" aria-label="Example icon button with a menu icon" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                <mat-icon>menu</mat-icon> Settings Table
+            </button>
+        </div> -->
+        <div class="col-xl-2 col-md-3 border-end collapse collapse-horizontal show" id="collapseExample" #collapseSide>
+            <div class="list-group list-group-flush">
+                <ng-container *ngFor="let table of sharedService.mainTableList">
+                    <a class="list-group-item list-group-item-action fw-semibold text-capitalize px-2" role="button"
+                    (click)="sharedService.lookupTableType=table.name;settingTab=false"
+                    [ngClass]="sharedService.lookupTableType==table.name ? 'text-primary' : ''">
+                        {{table?.display_name || table?.name}}
+                    </a>
+                </ng-container>
+                <a class="list-group-item list-group-item-action fw-semibold text-capitalize px-2 d-flex w-100 align-items-center justify-content-between" role="button"
+                    (click)="showSettings=!showSettings"
+                    [ngClass]="settingTab ? 'text-primary' : ''">
+                    Settings
+                    <mat-icon [ngClass]="showSettings ? 'rotate' : ''">expand_more</mat-icon>
+                </a>
+                <ng-container *ngIf="showSettings">
+                    <a class="list-group-item list-group-item-action fw-semibold text-capitalize ps-4"
+                        *ngFor="let table of sharedService.lookupTableList" role="button"
+                        (click)="sharedService.lookupTableType=table.name;settingTab=true"
+                        [ngClass]="sharedService.lookupTableType==table.name ? 'text-primary' : ''">
+                        {{table?.display_name || table?.name}}
+                    </a>
+                </ng-container>
+            </div>
+            
+        </div>
+        <div class="px-0" [ngClass]="sharedService.showSide  ? 'col-xl-10 col-md-9' : 'col-12' ">
+            <ng-container *ngFor="let table of sharedService.mainTableList">
+                <app-table *ngIf="sharedService.lookupTableType==table.name" [page]="sharedService.lookupTableType"
+                    [tableFormat]="table" [pageName]="sharedService.lookupTableType">
+                </app-table>
+            </ng-container>
+            <ng-container *ngFor="let table of sharedService.lookupTableList">
+                <app-table *ngIf="sharedService.lookupTableType==table.name" [page]="sharedService.lookupTableType"
+                    [tableFormat]="table" [pageName]="sharedService.lookupTableType">
+                </app-table>
+            </ng-container>
+            <ng-container *ngIf="!sharedService?.lookupTableList?.length && !sharedService?.mainTableList?.length">
+                <h3>Tables not found</h3>
+            </ng-container>
+        </div>
+    </div>
+</div>

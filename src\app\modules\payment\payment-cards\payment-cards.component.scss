@@ -1,0 +1,35 @@
+.logo-img{
+    width: 110px;
+    height: 75px;
+    margin-right: 10px;
+}
+
+.logo-img img{
+    width: 100%;
+    height: 75px;
+}
+.card{
+    font-family: 'Poppins', sans-serif !important;
+}
+.card .title{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 27px;
+    color: #2a2a2a;
+    text-transform: capitalize;
+    display: flex;
+    align-items: center;
+}
+.card .sub-title{
+    font-style: normal;
+    font-size: 12px;
+    color: #7a7a7a;
+    text-transform: capitalize;
+    display: flex;
+    align-items: center;
+}
+
+.secure{
+    -webkit-text-security: disc;
+}

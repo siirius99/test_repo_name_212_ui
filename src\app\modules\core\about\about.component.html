@@ -1,0 +1,21 @@
+<div class="container-fluid">
+    <mat-form-field appearance="outline">
+        <mat-label>
+            Card type
+        </mat-label>
+        <mat-select [(ngModel)]="layoutType">
+            <mat-option value="profile">Profile</mat-option>
+            <mat-option value="profile_long">Profile Long</mat-option>
+            <mat-option value="detail">Detail</mat-option>
+            <mat-option value="detail_long">Detail Long</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+
+<app-cards
+[cardType]="layoutType"
+[page]="'expense_categories'"
+[displayedColumnsDetail]="displayedColumnsDetail"
+[taqlQuery]="taqlQuery"
+>
+</app-cards>

@@ -1,0 +1,80 @@
+<div class="container px-md-5 mt-4">
+  <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="card p-3">
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="font-default">Contact Us</h2>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label for="name">Name</mat-label>
+            <input
+              matInput
+              id="name"
+              placeholder="Name"
+              formControlName="name"
+            />
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label for="email">Email</mat-label>
+            <input
+              matInput
+              id="email"
+              placeholder="Email"
+              formControlName="email"
+            />
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label for="department">Department</mat-label>
+            <mat-select id="department" formControlName="department" placeholder="Select Department">
+              <mat-option value="sales">Sales</mat-option>
+              <mat-option value="support">Support</mat-option>
+              <mat-option value="feedback">Feedback</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label for="message">Message</mat-label>
+            <textarea
+              matInput
+              id="message"
+              placeholder="Message"
+              formControlName="message"
+              rows="5"
+            ></textarea>
+          </mat-form-field>
+        </div>
+        <div class="form-group mb-2">
+          <p class="mb-0">How did you hear about us?</p>
+          <mat-radio-group formControlName="howDidYouHear">
+            <mat-radio-button value="search">Search Engine</mat-radio-button>
+            <mat-radio-button value="social">Social Media</mat-radio-button>
+            <mat-radio-button value="friend">Friend</mat-radio-button>
+            <mat-radio-button value="other">Other</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="form-group" formGroupName="contactOptions">
+          <p class="mb-0">Contact Options</p>
+          <mat-checkbox formControlName="phone"
+            >Phone</mat-checkbox
+          >
+          <mat-checkbox formControlName="email"
+            >Email</mat-checkbox
+          >
+        </div>
+      </div>
+    </div>
+    <div>
+      <button mat-raised-button color="primary" type="submit" class="mt-4">
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

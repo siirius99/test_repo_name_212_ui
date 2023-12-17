@@ -1,0 +1,32 @@
+<div class="payment-page">
+    <div class="container h-100">
+        <div class="row mb-2 h-100 align-items-center justify-content-center">
+            <div class="col-md-8 col-sm-12 mb-5">
+                <div class="card p-4" *ngIf="paymentSuccess">
+                    <div class="payment-fail text-center">
+                        <div>
+                            <mat-icon class="text-success">
+                                credit_score
+                            </mat-icon>
+                        </div>
+                        <h1 class="mt-2">Payment Suceess</h1>
+                        <button class="btn btn-primary" routerLink="/payment"><i class="fa fa-repeat mr-2"></i>Go to home</button>
+                    </div>
+                </div>
+
+                <div class="card p-4" *ngIf="!paymentSuccess">
+                    <div class="payment-fail text-center">
+                        <div>
+                            <mat-icon class="text-danger">
+                                warning_amber
+                            </mat-icon>
+                        </div>
+                        <h1 class="mt-2">Payment Failed!</h1>
+                        <button class="btn btn-primary" routerLink="/payment"><i class="fa fa-repeat mr-2"></i>Try
+                            Again</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

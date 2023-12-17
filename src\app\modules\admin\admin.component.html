@@ -1,0 +1,112 @@
+<div>
+    <app-header></app-header>
+    <div class="row mx-0"  *ngIf="!loading">
+        <div class="col-12 mb-3 d-flex flex-wrap">
+            <div class="w-fit border-end px-3">
+                <h4 class="mb-0">No. of clients</h4>
+                <h1 class="text-primary fw-bold mb-0">{{kpiData?.no_of_clients || 0}}</h1>
+            </div>
+            <div class="w-fit border-end px-3">
+                <h4 class="mb-0">No. of Paid clients</h4>
+                <h1 class="text-primary fw-bold mb-0">{{kpiData?.no_of_paid_clients || 0}}</h1>
+            </div>
+            <div class="w-fit border-end px-3">
+                <h4 class="mb-0">No. of Trials</h4>
+                <h1 class="text-primary fw-bold mb-0">{{kpiData?.no_of_trials || 0}}</h1>
+            </div>
+            <div class="w-fit border-end px-3">
+                <h4 class="mb-0">Signups this month</h4>
+                <h1 class="text-primary fw-bold mb-0">{{kpiData?.no_of_signups?.configured ? (kpiData?.no_of_signups?.count || 0) : 'N/A'}}</h1>
+            </div>
+        </div>
+        <div class="col-12 d-flex justify-content-end align-items-between">
+            <mat-form-field class="ms-3">
+                <mat-label class="text-capitalize">Search</mat-label>
+                <mat-icon matPrefix>search</mat-icon>
+                <input matInput type="search" placeholder="search here" [(ngModel)]="searchQuery" (ngModelChange)="applyFilter()">
+            </mat-form-field>
+        </div>
+        <div class="col-12 mb-3">
+            <div class="table-container mat-elevation-z8 mt-3 w-100">
+                <table aria-label="payables-table" mat-table [dataSource]="dataSource" matSort class="w-100" (matSortChange)="sortData($event)">
+
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                        <td mat-cell *matCellDef="let element">{{element.name}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="email">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+                        <td mat-cell *matCellDef="let element">{{element.email}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="allowed_trial_days">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Trial days left </th>
+                        <td mat-cell *matCellDef="let element">{{element.allowed_trial_days}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="created_timestamp">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Created date </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.created_timestamp && (element.created_timestamp*1000 | date : 'MMM dd, yyyy' :
+                            element?.timezone) || ''}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="payment_status">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Payment status </th>
+                        <td mat-cell *matCellDef="let element">
+                            <span class="badge rounded-pill bg-success"
+                                *ngIf="element.payment_status=='Paid'">Paid</span>
+                            <span class="badge rounded-pill bg-danger"
+                                *ngIf="element.payment_status=='Overdue'">Overdue</span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="account_status">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Account status </th>
+                        <td mat-cell *matCellDef="let element">
+                            <span class="badge rounded-pill bg-primary"
+                                *ngIf="element.account_status=='Active'">Active</span>
+                            <span class="badge rounded-pill bg-warning"
+                                *ngIf="element.account_status=='Trial'">Trial</span>
+                            <span class="badge rounded-pill bg-danger"
+                                *ngIf="element.account_status=='Trial expired'">Trial expired</span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="plan_details">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Price per user </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.plan_details?.currency || ''}}{{element.plan_details?.actual_price}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="plan">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Subscription </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.plan}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef class="pr-3 text-right" width="150px">Action</th>
+                        <td mat-cell *matCellDef="let element" class="pr-3 text-right">
+                            <span matTooltip="Edit trial days{{element.account_status=='Active' ? ' : Not allowed for active accounts' : ''}}" matTooltipPosition="before">
+                                <button (click)="edit(element)" mat-icon-button color="primary" [disabled]="element.account_status=='Active'">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                            </span>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="hover-row"></tr>
+                </table>
+                <ng-container *ngIf="dataSource?.filteredData?.length === 0 && !loading">
+                    <h2 class="p-5 text-center">No users found</h2>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,59 @@
+<div class="row mt-3 mx-0">
+    <div class="col-md-12 d-flex justify-content-end">
+        <button mat-raised-button type="button" (click)="addCard()" color="primary">
+            <mat-icon>add</mat-icon>
+            Card
+        </button>
+    </div>
+</div>
+<div class="row mx-0 mt-3" *ngIf="!loading">
+    <div class="col-12">
+        <ng-container *ngFor="let card of cardsData">
+            <div class="card p-2 w-100 mb-2">
+                <div class="d-flex w-100">
+                    <div class="logo-img">
+                        <img src="../../../../../assets/images/mastercard-logo.png" *ngIf="card.brand=='mastercard'"
+                            alt="master card">
+                        <img src="../../../../../assets/images/visa-logo.png" *ngIf="card.brand=='visa'" alt="visa">
+                        <img src="../../../../../assets/images/credit-card-logo.png"
+                            *ngIf="!(card.brand=='visa' || card.brand=='mastercard')" alt="card">
+                    </div>
+                    <div class="content w-60 row mx-0 align-items-center">
+                        <div class="title w-100">
+                            {{card.brand}}
+                            &nbsp;<span class="secure">****</span>&nbsp;
+                            {{card.last4}}&nbsp;
+                            <span class="badge text-bg-primary ml-2" *ngIf="card.is_default">
+                                Default
+                            </span>
+                        </div>
+                        <div class="title w-100">
+                            {{card.billing_details.name}}
+                        </div>
+                        <div class="sub-title w-100">
+                            Expires {{card.display_month}} {{card.exp_year}}
+                        </div>
+                    </div>
+                    <div class="actions d-flex align-items-center ms-auto">
+                        <button mat-raised-button color="primary" class="me-5" (click)="defaultCard(card)" [disabled]="card.is_default" [matTooltip]="'Mark as default'" matTooltipClass="dateTop dateBefore" matTooltipPosition="before">
+                            Mark default
+                        </button>
+
+                        <button mat-icon-button (click)="editCard(card)" color="primary" [matTooltip]="'Edit card'" matTooltipClass="dateTop dateBefore" matTooltipPosition="before">
+                            <!-- Edit Icon -->
+                            <mat-icon>edit</mat-icon>
+                        </button>
+
+                        <button mat-icon-button color="warn" (click)="deleteCard(card)" [disabled]="card.is_default" [matTooltip]="'Delete card'" matTooltipClass="dateTop dateBefore" matTooltipPosition="before">
+                            <!-- Delete Icon -->
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="!cardsData.length">
+            <h2 class="p-5 text-center">No cards found</h2>
+        </ng-container>
+    </div>
+</div>

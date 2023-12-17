@@ -1,0 +1,22 @@
+@import '../../../../variables.scss';
+
+.active-link {
+    transition: background-color 0.3s;
+    background-color: darken($primary-color,15%);
+    color: #ffffff;
+    font-weight: bold;
+}
+.navbar{
+    position: sticky;
+    top:0px;
+    z-index: 1000;
+    margin-bottom: 1.5em;
+}
+.menuButton{
+    backdrop-filter: brightness(0.8);
+    max-width: 40px;
+    min-width: 40px;
+    font-size: large;
+    font-weight: bold;
+    color: #ffffff !important;
+}

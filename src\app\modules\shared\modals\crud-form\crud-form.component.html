@@ -1,0 +1,86 @@
+<div class="modal-header mb-3">
+    <div class="d-flex flex-row justify-content-between w-100 align-items-center py-3 px-4 border-bottom">
+        <h2 class="mb-0">{{data.title}}</h2>
+        <a matButton (click)="closeDialog()">
+        <mat-icon>close</mat-icon>
+        </a>
+    </div>
+</div>
+  
+  <div class="modal-body mb-3 px-md-4 px-sm-2" [ngClass]="{'border-bottom' : fieldsList.length}">
+    <form [formGroup]="formGroup">
+        <div class="row mx-0">
+            <ng-container *ngFor="let item of fieldsList">
+                <div class="col-md-6" *ngIf="item.field=='text'">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>{{item.display_name || item.name}}</mat-label>
+                        <input matInput type="text" [formControlName]="item.key">
+                        <mat-error *ngIf="formGroup.get(item.key)?.hasError('minlength')">{{item.display_name || item.name}} is too short.</mat-error>
+                        <mat-error *ngIf="formGroup.get(item.key)?.hasError('maxlength')">{{item.display_name || item.name}} is too long.</mat-error>
+                    </mat-form-field>
+                </div>
+        
+                <div class="col-md-6" *ngIf="item.field=='number'">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>{{item.display_name || item.name}}</mat-label>
+                        <input matInput type="number" appIntegerInput [formControlName]="item.key">
+                        <mat-error *ngIf="formGroup.get(item.key)?.hasError('min')">{{item.display_name || item.name}} is too low.</mat-error>
+                        <mat-error *ngIf="formGroup.get(item.key)?.hasError('max')">{{item.display_name || item.name}} is too high.</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-6" *ngIf="item.field=='double'">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>{{item.display_name || item.name}}</mat-label>
+                        <input matInput type="number" [formControlName]="item.key">
+                        <mat-error *ngIf="formGroup.get(item.key)?.hasError('min')">{{item.display_name || item.name}} is too low.</mat-error>
+                        <mat-error *ngIf="formGroup.get(item.key)?.hasError('max')">{{item.display_name || item.name}} is too high.</mat-error>
+                    </mat-form-field>
+                </div>
+        
+                <div class="col-md-6" *ngIf="item.field=='select'">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>{{item.display_name || item.name}}</mat-label>
+                        <mat-select [formControlName]="item.key">
+                        <mat-option *ngFor="let val of item.optionValues" [value]="val">{{val}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-6" *ngIf="item.field=='reference'">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>{{item.display_name || item.name}}</mat-label>
+                        <mat-select [formControlName]="item.key">
+                        <mat-option *ngFor="let val of item.optionValues" [value]="val[item.reference.column]">{{val[item.reference.display || item.name] || val[item.reference.column]}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+        
+                <div class="col-md-6" *ngIf="item.field=='date'">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>{{item.display_name || item.name}}</mat-label>
+                        <input matInput [matDatepicker]="datepicker" [formControlName]="item.key">
+                        <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                        <mat-datepicker #datepicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+        
+                <div class="col-md-6" *ngIf="item.field=='checkbox'">
+                    <mat-checkbox class="py-2" [formControlName]="item.key">{{item.display_name || item.name}}</mat-checkbox>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="!fieldsList?.length">
+                <div class="col-12 alert alert-warning">
+                    Form not configured.
+                </div>
+            </ng-container>
+        </div>
+    </form>
+  </div>
+  
+  <div class="modal-footer mb-3 px-4" *ngIf="fieldsList?.length">
+    <button type="button" mat-raised-button color="basic" data-dismiss="modal" class="me-3" (click)="closeDialog()">Close</button>
+    <button type="button" mat-raised-button color="primary" [disabled]="formGroup.invalid || submitted" (click)="submitForm()">Submit</button>
+  </div>
+  

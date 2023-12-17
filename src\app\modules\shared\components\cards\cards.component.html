@@ -1,0 +1,71 @@
+<div class="container-fluid">
+    <div class="container-fluid row mx-0">
+        <ng-container *ngIf="cardType=='profile'">
+        <div class="col-xxl-2 col-xl-3 col-md-4 col-sm-12 mb-3" *ngFor="let item of dataList">
+            <mat-card class="h-100 justify-content-end pb-2">
+                <img mat-card-image [src]="item[cardStructure?.image]" alt="Photo of User" *ngIf="cardStructure?.image">
+                <mat-card-header *ngIf="cardStructure?.title || cardStructure?.subtitle">
+                    <mat-card-title *ngIf="cardStructure?.title">{{item[cardStructure?.title]}}</mat-card-title>
+                    <mat-card-subtitle>{{item[cardStructure?.subtitle]}}</mat-card-subtitle>
+                </mat-card-header>
+            </mat-card>
+        </div>
+        </ng-container>
+
+        <ng-container *ngIf="cardType=='profile_long'">
+            <div class="col-xxl-2 col-xl-3 col-md-4 col-sm-12 mb-3" *ngFor="let item of dataList">
+                <mat-card class="h-100 justify-content-center">
+                    <mat-card-header *ngIf="cardStructure?.title || cardStructure?.subtitle">
+                        <img mat-card-sm-image class="card-sm-image" [src]="item[cardStructure?.image]" alt="Photo of User" *ngIf="cardStructure?.image" matCardAvatar>
+                        <mat-card-title *ngIf="cardStructure?.title">{{item[cardStructure?.title]}}</mat-card-title>
+                        <mat-card-subtitle>{{item[cardStructure?.subtitle]}}</mat-card-subtitle>
+                    </mat-card-header>
+                </mat-card>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="cardType=='detail'">
+            <div class="col-xxl-2 col-xl-3 col-md-4 col-sm-12 mb-3" *ngFor="let item of dataList">
+                <mat-card class="h-100 justify-content-end pb-2">
+                    <img mat-card-image [src]="item[cardStructure?.image]" alt="Photo of User" *ngIf="cardStructure?.image">
+                    <mat-card-header *ngIf="cardStructure?.title || cardStructure?.subtitle">
+                        <mat-card-title *ngIf="cardStructure?.title">{{item[cardStructure?.title]}}</mat-card-title>
+                        <mat-card-subtitle>{{item[cardStructure?.subtitle]}}</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content *ngIf="cardStructure?.detail">
+                        <p class="mt-2">
+                            {{item[cardStructure?.detail]}}
+                        </p>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="cardType=='detail_long'">
+            <div class="col-xl-12 col-md-12 col-sm-12 mb-3" *ngFor="let item of dataList">
+                <mat-card class="h-100 justify-content-end pb-2">
+                    <mat-card-header *ngIf="cardStructure?.title || cardStructure?.subtitle">
+                        <img mat-card-sm-image class="card-sm-image" [src]="item[cardStructure?.image]" alt="Photo of User" *ngIf="cardStructure?.image" matCardAvatar>
+                        <mat-card-title *ngIf="cardStructure?.title">{{item[cardStructure?.title]}}</mat-card-title>
+                        <mat-card-subtitle>{{item[cardStructure?.subtitle]}}</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content *ngIf="cardStructure?.detail">
+                        <p class="mt-2">
+                            {{item[cardStructure?.detail]}}
+                        </p>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </ng-container>
+    
+        <mat-paginator 
+        #paginator
+        [length]="totalEntries"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        [pageIndex]="pageNumber"
+        (page)="handlePageEvent($event)"
+        aria-label="Select page">
+        </mat-paginator>
+    </div>
+</div>

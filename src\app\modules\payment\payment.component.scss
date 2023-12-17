@@ -1,0 +1,33 @@
+mat-tab-group {
+  margin-top: -1rem;
+}
+
+.subcriptionCard {
+  min-width: 350px;
+  width: 40vw;
+}
+
+::ng-deep .subscription-radio-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+    .subscription-radio-button {
+        padding: 10px;
+        width: 100%;
+        border-bottom: 1px solid #9b9b9b ;
+        > div{
+            display: flex;
+            width: 100%;
+            flex-direction: row-reverse;
+            justify-content: space-between;
+            .mdc-label{
+                width: -webkit-fill-available;
+                cursor: pointer;
+            }
+        }
+    }
+    :last-child{
+        border-bottom: 0px solid #9b9b9b ;
+    }
+    
+}

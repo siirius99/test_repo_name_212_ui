@@ -1,0 +1,33 @@
+@use '@angular/material' as mat;
+@import '@angular/material/theming';
+@import './variables.scss';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+
+$my-primary: mat.define-palette(mat.$blue-palette, 800);
+$my-accent: mat.define-palette(mat.$blue-palette, 800);
+$my-warn: mat.define-palette(mat.$red-palette);
+$my-typography: mat.define-typography-config(
+    $font-family:Poppins
+  );
+
+$my-theme: mat.define-light-theme((
+ color: (
+   primary: $my-primary,
+   accent: $my-accent,
+   warn: $my-warn,
+ ),
+ typography: $my-typography,
+ density: 0,
+));
+
+@include mat.typography-hierarchy($my-typography);
+@include angular-material-theme($my-theme);
+
+// Override Bootstrap primary color
+$primary: $primary-color;
+
+// Override Bootstrap font family
+$font-family-sans-serif: 'Poppins', sans-serif;
+
+// Import Bootstrap SCSS to apply the changes
+@import 'bootstrap/scss/bootstrap';

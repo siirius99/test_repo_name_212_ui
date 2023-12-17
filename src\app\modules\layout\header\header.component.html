@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-lg bg-primary w-100 px-2">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse py-2" id="navbarTogglerDemo01">
+            <!-- <a mat-button class="text-light" [routerLink]="'/home'" routerLinkActive="active-link" >Home</a>
+            <a mat-button class="text-light" [routerLink]="'/about'" routerLinkActive="active-link" >About</a>
+            <a mat-button class="text-light" [routerLink]="'/contact-us'" routerLinkActive="active-link" >Contact</a> -->
+            <ng-container *ngIf="!userInfo?.is_admin">
+                <a mat-button class="text-light" aria-label="Example icon button with a menu icon" [routerLink]="'/settings'" role="button" aria-expanded="false" aria-controls="collapseExample" *ngIf="!showSettings()">
+                    <mat-icon class="me-0">menu</mat-icon>
+                </a>
+                <a mat-button class="text-light" aria-label="Example icon button with a menu icon" data-bs-toggle="collapse"  href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" *ngIf="showSettings()"  (click)="showSidebar()">
+                    <mat-icon class="me-0">menu</mat-icon>
+                </a>
+            </ng-container>
+            <ng-container *ngIf="userInfo?.is_admin">
+                <a mat-button class="text-light" [routerLink]="['/admin']" routerLinkActive="active-link" >Admin</a>
+            </ng-container>
+            <!-- <ng-container *ngFor="let table of sharedService.mainTableList">
+                <a mat-button class="text-light" [routerLink]="['/tables',table.name]" routerLinkActive="active-link" >{{table?.display_name || table?.name}}</a>
+            </ng-container> -->
+            <!-- <a mat-button class="text-light" [routerLink]="'/tables'" routerLinkActive="active-link" >Tables</a> -->
+        </div>
+        <span class="spacer"></span>
+        <!-- <a mat-button class="text-light ms-3" [routerLink]="'/settings'" routerLinkActive="active-link">
+            <mat-icon>settings</mat-icon>
+            Settings
+        </a> -->
+        <button mat-stroked-button class="bg-light ms-3" (click)="downloadCollection()"  *ngIf="!userInfo?.is_admin">
+            <mat-icon>cloud_download</mat-icon>
+            Postman
+        </button>
+        <button mat-stroked-button class="bg-info ms-3" (click)="redirectSwagger()"  *ngIf="!userInfo?.is_admin">
+            Swagger
+        </button>
+        
+        <button mat-button [matMenuTriggerFor]="menu" (mouseenter)="openMenu()" aria-label="Example icon-button with a menu" class="ms-3 menuButton">
+            {{(userInfo?.name ? userInfo?.name[0] : 'P') | uppercase}}
+        </button>
+        <mat-menu #menu="matMenu">
+            <button [routerLink]="'/payment'" mat-menu-item *ngIf="sharedService.showSubscription && !userInfo?.is_admin">
+                <span>Subscribe</span>
+            </button>
+            <button [routerLink]="'/update-password'" mat-menu-item>
+                <span>Update password</span>
+            </button>
+            <button  (click)="logout()" mat-menu-item>
+                <span>Logout</span>
+            </button>
+        </mat-menu>
+</nav>

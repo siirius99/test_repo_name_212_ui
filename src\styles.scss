@@ -1,0 +1,44 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+@import './theming.scss';
+@import './variables.scss';
+
+html, body { height: 100%; }
+body { margin: 0;font-family: 'Poppins',sans-serif;}
+
+h1, h2, h3, h4, h5, h6, p, a,.font-default {
+    font-family: 'Poppins', sans-serif;
+}
+/* Default styling for small screens */
+.table-container {
+    overflow-x: auto;
+    td{
+        min-width: 50px;
+        max-width: 150px;
+    }
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+/* Responsive styling for larger screens */
+@media (min-width: 768px) {
+    .table-container {
+        overflow-x: auto;
+        display: block;
+        white-space: nowrap;
+    }
+
+    .mat-table {
+        width: 100%;
+    }
+
+    .mat-row {
+        display: flex;
+    }
+}
+
+.mat-mdc-dialog-container{
+    max-height: 90vh !important;
+}

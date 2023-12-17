@@ -1,0 +1,22 @@
+<div class="modal-header mb-3">
+    <div class="d-flex flex-row justify-content-between w-100 align-items-center py-3 px-4 border-bottom">
+        <h2 class="mb-0">{{data.title}}</h2>
+        <a matButton (click)="closeDialog()">
+        <mat-icon>close</mat-icon>
+        </a>
+    </div>
+</div>
+  
+<div class="modal-body mb-3 p-md-4 p-sm-2" [ngClass]="{'border-bottom' : !data?.disableArchive}">
+    <h4 *ngIf="!data?.disableArchive" [innerHtml]="data.message"></h4>
+    <div class="alert alert-warning" *ngIf="data?.disableArchive">
+        {{data.message}}
+    </div>
+</div>
+
+<div class="modal-footer mb-3 px-4" *ngIf="!data?.disableArchive">
+    <button type="button" mat-raised-button color="basic" data-dismiss="modal" class="me-3" (click)="closeDialog()">Cancel</button>
+    <button type="button" mat-raised-button [color]="data.action=='Delete' ? 'warn' : 'primary'" (click)="submit()" *ngIf="data.page!=='payment-card' && data.page!=='confirm-banner'">{{data.action || 'Continue'}}</button>
+    <button type="button" mat-raised-button [color]="data.action=='Delete' ? 'warn' : 'primary'" (click)="confirm()" *ngIf="data.page=='payment-card' || data.page=='confirm-banner'">{{data.action || 'Continue'}}</button>
+</div>
+  

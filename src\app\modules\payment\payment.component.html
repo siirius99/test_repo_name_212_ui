@@ -1,0 +1,39 @@
+<mat-tab-group *ngIf="sharedService.paymentStatus && !(sharedService.paymentStatus?.plan_type=='free')">
+    <mat-tab label="Subscription"> 
+        <div class="container pt-5 d-flex justify-content-center">
+            <div class="p-4 mt-3 card subcriptionCard">
+                <h2 class="fw-bold"><span class="text-capitalize">{{sharedService.paymentStatus?.plan}}</span>  plan is active.</h2>
+                <h4>Next bill of <b>{{sharedService.paymentStatus?.plan_amount}}</b> on <b>{{sharedService.paymentStatus?.next_payment_timestamp ? (sharedService.paymentStatus?.next_payment_timestamp*1000 | date:'dd MMM, yy') : '-' }}</b></h4>
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab label="Invoices">
+        <app-invoices></app-invoices>
+    </mat-tab>
+    <mat-tab label="Cards">
+        <app-payment-cards></app-payment-cards>
+    </mat-tab>
+</mat-tab-group>
+
+<div *ngIf="sharedService.paymentStatus?.plan_type=='free'">
+    <div class="container d-flex justify-content-center">
+        <div class="p-4 card subcriptionCard">
+            <h2 class="fw-bold mb-0">Free trial is active please subscribe to continue using tools.</h2>
+            <h5 class="text-muted"><b>{{sharedService.paymentStatus?.trial_days_left || 0}} day(s)</b> left before trial expires.</h5>
+            <div class="card p-4 p-md-3">
+                <form *ngIf="sharedService.paymentStatus?.plans">
+                    <mat-radio-group class="subscription-radio-group" name="subsciption_plan"
+                        [(ngModel)]="selectedPlan">
+                        <mat-radio-button class="subscription-radio-button" *ngFor="let plan of sharedService.paymentStatus?.plans"
+                            [value]="plan.value">
+                            <b class="text-capitalize">{{plan.value}} - </b> <b>{{plan.currency}}{{plan.amount}}</b> per {{plan.text || '-'}}
+                        </mat-radio-button>
+                    </mat-radio-group>
+                    <button mat-raised-button color="primary" class="float-end" type="submit" [disabled]="submitted || !selectedPlan" (click)="checkPlan()">
+                        Buy plan
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

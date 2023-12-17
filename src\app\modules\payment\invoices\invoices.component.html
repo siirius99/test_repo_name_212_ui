@@ -1,0 +1,62 @@
+<div class="mt-3 w-100" *ngIf="!loading">
+    <table aria-label="payables-table"  mat-table [dataSource]="dataSource" matSort class="w-100" (matSortChange)="sortData($event)">
+
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Type </th>
+        <td mat-cell *matCellDef="let element">{{element.type}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="amount_in_cents">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount </th>
+        <td mat-cell *matCellDef="let element"> {{(element?.amount_in_cents/100) | number:'.2-2'}} {{element.currency | uppercase}}</td>
+      </ng-container>
+      
+      <!-- <ng-container matColumnDef="currency">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'CommonForm.currency' | translate}} </th>
+        <td mat-cell *matCellDef="let element">{{element.currency}}</td>
+      </ng-container> -->
+
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> No. of user </th>
+        <td mat-cell *matCellDef="let element"><div class="max-w-column"> {{element.quantity}} </div></td>
+      </ng-container>
+
+      <ng-container matColumnDef="invoice_created_at">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Created Date </th>
+        <td mat-cell *matCellDef="let element"> 
+          {{element.invoice_created_at && (element.invoice_created_at*1000 | date :  'MMM dd, yyyy' : element.timezone) || ''}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="invoice_paid_at">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Paid date </th>
+        <td mat-cell *matCellDef="let element"> 
+          {{element.invoice_paid_at && (element.invoice_paid_at*1000 | date :  'MMM dd, yyyy' : element.timezone) || ''}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status  </th>
+        <td mat-cell *matCellDef="let element"> 
+          <span class="badge rounded-pill bg-success" *ngIf="element.status=='paid'">Paid</span>
+          <span class="badge rounded-pill bg-danger" *ngIf="element.status=='open'">Open</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef class="pr-3 text-right" width="120px">Action</th>
+        <td mat-cell *matCellDef="let element" class="pr-3 text-right"> 
+          <button (click)="downloadInvoice(element)" mat-icon-button color="primary" matTooltip="Download invoice" matTooltipClass="dateTop dateBefore" matTooltipPosition="before">
+            <!-- Download File Icon -->
+            <mat-icon>download</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="hover-row"></tr>
+    </table>
+    <ng-container *ngIf="dataSource?.filteredData?.length === 0 && !loading">
+        <h2 class="p-5 text-center">No invoice found</h2>
+    </ng-container>
+  </div>
